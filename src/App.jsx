@@ -21,6 +21,7 @@ import AdminUsers from './pages/platform-admin/system/AdminUsers'
 import PlatformSettings from './pages/platform-admin/system/PlatformSettings'
 import Analytics from './pages/platform-admin/system/Analytics'
 import AuditLogs from './pages/platform-admin/system/AuditLogs'
+import Logs from './pages/platform-admin/system/Logs'
 import PrivateRoute from './components/routing/PrivateRoute'
 
 function App() {
@@ -75,6 +76,7 @@ function App() {
         <Route path="system/platform-settings" element={<PlatformSettings />} />
         <Route path="system/analytics" element={<Analytics />} />
         <Route path="system/audit-logs" element={<AuditLogs />} />
+        <Route path="system/logs" element={<Logs />} />
       </Route>
 
       {/* Default redirect */}

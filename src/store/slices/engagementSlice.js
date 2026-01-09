@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import * as engagementAPI from '../../services/api/engagement'
+import { clearEngagementCache } from '../../utils/cacheUtils'
 
 export const getOpportunities = createAsyncThunk(
   'engagement/getOpportunities',
@@ -122,7 +123,8 @@ const engagementSlice = createSlice({
       })
       .addCase(getOpportunities.fulfilled, (state, action) => {
         state.loading = false
-        state.opportunities = action.payload
+        const payload = action.payload?.data || action.payload
+        state.opportunities = Array.isArray(payload) ? payload : []
       })
       .addCase(getOpportunities.rejected, (state, action) => {
         state.loading = false
@@ -134,7 +136,9 @@ const engagementSlice = createSlice({
       })
       .addCase(createOpportunity.fulfilled, (state, action) => {
         state.loading = false
-        state.opportunities.push(action.payload)
+        const payload = action.payload?.data || action.payload
+        state.opportunities.push(payload)
+        clearEngagementCache() // Clear cache after mutation
       })
       .addCase(createOpportunity.rejected, (state, action) => {
         state.loading = false
@@ -146,7 +150,9 @@ const engagementSlice = createSlice({
       })
       .addCase(createIndustryPartner.fulfilled, (state, action) => {
         state.loading = false
-        state.industryPartners.push(action.payload)
+        const payload = action.payload?.data || action.payload
+        state.industryPartners.push(payload)
+        clearEngagementCache() // Clear cache after mutation
       })
       .addCase(createIndustryPartner.rejected, (state, action) => {
         state.loading = false
@@ -158,7 +164,8 @@ const engagementSlice = createSlice({
       })
       .addCase(getIndustryPartners.fulfilled, (state, action) => {
         state.loading = false
-        state.industryPartners = action.payload
+        const payload = action.payload?.data || action.payload
+        state.industryPartners = Array.isArray(payload) ? payload : []
       })
       .addCase(getIndustryPartners.rejected, (state, action) => {
         state.loading = false
@@ -170,7 +177,8 @@ const engagementSlice = createSlice({
       })
       .addCase(getAssessments.fulfilled, (state, action) => {
         state.loading = false
-        state.assessments = action.payload
+        const payload = action.payload?.data || action.payload
+        state.assessments = Array.isArray(payload) ? payload : []
       })
       .addCase(getAssessments.rejected, (state, action) => {
         state.loading = false
@@ -182,7 +190,9 @@ const engagementSlice = createSlice({
       })
       .addCase(createAssessment.fulfilled, (state, action) => {
         state.loading = false
-        state.assessments.push(action.payload)
+        const payload = action.payload?.data || action.payload
+        state.assessments.push(payload)
+        clearEngagementCache() // Clear cache after mutation
       })
       .addCase(createAssessment.rejected, (state, action) => {
         state.loading = false
@@ -194,7 +204,8 @@ const engagementSlice = createSlice({
       })
       .addCase(getCourses.fulfilled, (state, action) => {
         state.loading = false
-        state.courses = action.payload
+        const payload = action.payload?.data || action.payload
+        state.courses = Array.isArray(payload) ? payload : []
       })
       .addCase(getCourses.rejected, (state, action) => {
         state.loading = false
@@ -206,7 +217,9 @@ const engagementSlice = createSlice({
       })
       .addCase(createCourse.fulfilled, (state, action) => {
         state.loading = false
-        state.courses.push(action.payload)
+        const payload = action.payload?.data || action.payload
+        state.courses.push(payload)
+        clearEngagementCache() // Clear cache after mutation
       })
       .addCase(createCourse.rejected, (state, action) => {
         state.loading = false

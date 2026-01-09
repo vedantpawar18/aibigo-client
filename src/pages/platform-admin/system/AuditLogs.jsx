@@ -138,10 +138,14 @@ const AuditLogs = () => {
             ) : (
               auditLogs.map((log) => (
                 <TableRow key={log._id}>
-                  <TableCell>{log.userId}</TableCell>
+                  <TableCell>
+                    {typeof log.userId === 'object' && log.userId !== null
+                      ? log.userId.email || log.userId._id || 'N/A'
+                      : log.userId || 'N/A'}
+                  </TableCell>
                   <TableCell>{log.action}</TableCell>
-                  <TableCell>{log.ip}</TableCell>
-                  <TableCell>{new Date(log.timestamp).toLocaleString()}</TableCell>
+                  <TableCell>{log.ip || 'N/A'}</TableCell>
+                  <TableCell>{log.timestamp ? new Date(log.timestamp).toLocaleString() : 'N/A'}</TableCell>
                 </TableRow>
               ))
             )}

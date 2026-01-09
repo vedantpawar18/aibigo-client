@@ -33,6 +33,7 @@ import {
   AccountCircle as AccountCircleIcon,
   ExpandLess,
   ExpandMore,
+  Article as ArticleIcon,
 } from '@mui/icons-material'
 import { logout } from '../store/slices/authSlice'
 import { toast } from 'react-toastify'
@@ -78,6 +79,7 @@ const menuItems = [
       { label: 'Platform Settings', path: '/platform-admin/system/platform-settings' },
       { label: 'Analytics', path: '/platform-admin/system/analytics' },
       { label: 'Audit Logs', path: '/platform-admin/system/audit-logs' },
+      { label: 'Application Logs', path: '/platform-admin/system/logs', icon: <ArticleIcon /> },
     ],
   },
 ]

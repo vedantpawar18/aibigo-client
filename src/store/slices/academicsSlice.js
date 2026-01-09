@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import * as academicsAPI from '../../services/api/academics'
+import { clearAcademicsCache } from '../../utils/cacheUtils'
 
 // Universities
 export const createUniversity = createAsyncThunk(
@@ -127,7 +128,9 @@ const academicsSlice = createSlice({
       })
       .addCase(createUniversity.fulfilled, (state, action) => {
         state.loading = false
-        state.universities.push(action.payload)
+        const payload = action.payload?.data || action.payload
+        state.universities.push(payload)
+        clearAcademicsCache() // Clear cache after mutation
       })
       .addCase(createUniversity.rejected, (state, action) => {
         state.loading = false
@@ -139,7 +142,8 @@ const academicsSlice = createSlice({
       })
       .addCase(getUniversities.fulfilled, (state, action) => {
         state.loading = false
-        state.universities = action.payload
+        const payload = action.payload?.data || action.payload
+        state.universities = Array.isArray(payload) ? payload : []
       })
       .addCase(getUniversities.rejected, (state, action) => {
         state.loading = false
@@ -152,7 +156,8 @@ const academicsSlice = createSlice({
       })
       .addCase(getPrograms.fulfilled, (state, action) => {
         state.loading = false
-        state.programs = action.payload
+        const payload = action.payload?.data || action.payload
+        state.programs = Array.isArray(payload) ? payload : []
       })
       .addCase(getPrograms.rejected, (state, action) => {
         state.loading = false
@@ -165,7 +170,9 @@ const academicsSlice = createSlice({
       })
       .addCase(createProgram.fulfilled, (state, action) => {
         state.loading = false
-        state.programs.push(action.payload)
+        const payload = action.payload?.data || action.payload
+        state.programs.push(payload)
+        clearAcademicsCache() // Clear cache after mutation
       })
       .addCase(createProgram.rejected, (state, action) => {
         state.loading = false
@@ -178,7 +185,9 @@ const academicsSlice = createSlice({
       })
       .addCase(createSubject.fulfilled, (state, action) => {
         state.loading = false
-        state.subjects.push(action.payload)
+        const payload = action.payload?.data || action.payload
+        state.subjects.push(payload)
+        clearAcademicsCache() // Clear cache after mutation
       })
       .addCase(createSubject.rejected, (state, action) => {
         state.loading = false
@@ -190,7 +199,8 @@ const academicsSlice = createSlice({
       })
       .addCase(getSubjects.fulfilled, (state, action) => {
         state.loading = false
-        state.subjects = action.payload
+        const payload = action.payload?.data || action.payload
+        state.subjects = Array.isArray(payload) ? payload : []
       })
       .addCase(getSubjects.rejected, (state, action) => {
         state.loading = false
@@ -203,7 +213,9 @@ const academicsSlice = createSlice({
       })
       .addCase(createChapter.fulfilled, (state, action) => {
         state.loading = false
-        state.chapters.push(action.payload)
+        const payload = action.payload?.data || action.payload
+        state.chapters.push(payload)
+        clearAcademicsCache() // Clear cache after mutation
       })
       .addCase(createChapter.rejected, (state, action) => {
         state.loading = false
@@ -215,7 +227,8 @@ const academicsSlice = createSlice({
       })
       .addCase(getChapters.fulfilled, (state, action) => {
         state.loading = false
-        state.chapters = action.payload
+        const payload = action.payload?.data || action.payload
+        state.chapters = Array.isArray(payload) ? payload : []
       })
       .addCase(getChapters.rejected, (state, action) => {
         state.loading = false

@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import * as systemAPI from '../../services/api/system'
+import { clearCacheForEndpoint } from '../../services/api/axios'
 
 export const getAdminUsers = createAsyncThunk(
   'system/getAdminUsers',
@@ -111,7 +112,8 @@ const systemSlice = createSlice({
       })
       .addCase(getAdminUsers.fulfilled, (state, action) => {
         state.loading = false
-        state.adminUsers = action.payload
+        const payload = action.payload?.data || action.payload
+        state.adminUsers = Array.isArray(payload) ? payload : []
       })
       .addCase(getAdminUsers.rejected, (state, action) => {
         state.loading = false
@@ -123,7 +125,10 @@ const systemSlice = createSlice({
       })
       .addCase(createAdminUser.fulfilled, (state, action) => {
         state.loading = false
-        state.adminUsers.push(action.payload)
+        const payload = action.payload?.data || action.payload
+        state.adminUsers.push(payload)
+        // Clear cache for admin users list
+        clearCacheForEndpoint('/platform-admin/system/admin-users')
       })
       .addCase(createAdminUser.rejected, (state, action) => {
         state.loading = false
@@ -155,7 +160,8 @@ const systemSlice = createSlice({
       })
       .addCase(getPlatformSettings.fulfilled, (state, action) => {
         state.loading = false
-        state.platformSettings = action.payload
+        const payload = action.payload?.data || action.payload
+        state.platformSettings = Array.isArray(payload) ? payload : []
       })
       .addCase(getPlatformSettings.rejected, (state, action) => {
         state.loading = false
@@ -167,12 +173,15 @@ const systemSlice = createSlice({
       })
       .addCase(upsertPlatformSetting.fulfilled, (state, action) => {
         state.loading = false
-        const index = state.platformSettings.findIndex(s => s._id === action.payload._id)
+        const payload = action.payload?.data || action.payload
+        const index = state.platformSettings.findIndex(s => s._id === payload._id)
         if (index >= 0) {
-          state.platformSettings[index] = action.payload
+          state.platformSettings[index] = payload
         } else {
-          state.platformSettings.push(action.payload)
+          state.platformSettings.push(payload)
         }
+        // Clear cache for platform settings
+        clearCacheForEndpoint('/platform-admin/system/platform-settings')
       })
       .addCase(upsertPlatformSetting.rejected, (state, action) => {
         state.loading = false
@@ -184,7 +193,8 @@ const systemSlice = createSlice({
       })
       .addCase(getAnalyticsTriggers.fulfilled, (state, action) => {
         state.loading = false
-        state.analyticsTriggers = action.payload
+        const payload = action.payload?.data || action.payload
+        state.analyticsTriggers = Array.isArray(payload) ? payload : []
       })
       .addCase(getAnalyticsTriggers.rejected, (state, action) => {
         state.loading = false
@@ -196,7 +206,10 @@ const systemSlice = createSlice({
       })
       .addCase(createAnalyticsTrigger.fulfilled, (state, action) => {
         state.loading = false
-        state.analyticsTriggers.push(action.payload)
+        const payload = action.payload?.data || action.payload
+        state.analyticsTriggers.push(payload)
+        // Clear cache for analytics triggers
+        clearCacheForEndpoint('/platform-admin/system/analytics')
       })
       .addCase(createAnalyticsTrigger.rejected, (state, action) => {
         state.loading = false
