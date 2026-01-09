@@ -454,7 +454,7 @@ VITE_API_BASE_URL=https://aibigo-server.vercel.app/api/v1
 npm run build
 ```
 
-This creates an optimized production build in the `dist/` directory.
+This creates an optimized production build in the `build/` directory (Netlify compatible, like Create React App).
 
 ### Preview Production Build
 
@@ -466,9 +466,9 @@ This serves the production build locally for testing.
 
 ### Build Output
 
-- **Output Directory**: `dist/`
+- **Output Directory**: `build/` (Netlify compatible, like Create React App)
 - **Assets**: Optimized and minified
-- **Code Splitting**: Automatic code splitting for optimal loading
+- **Code Splitting**: Automatic code splitting with manual chunks for better performance
 
 ## 🚀 Deployment
 
@@ -478,9 +478,11 @@ This serves the production build locally for testing.
 2. **Configure Build Settings**:
    - **Root Directory**: `./`
    - **Build Command**: `npm run build`
-   - **Output Directory**: `dist`
+   - **Output Directory**: `build`
    - **Install Command**: `npm install`
    - **Framework Preset**: Vite
+   
+   **Note**: The build outputs to `build/` folder (like Create React App) for compatibility with Netlify and other hosting services.
 
 3. **Set Environment Variables** (optional):
    - `VITE_API_BASE_URL` - Backend API URL (defaults to `https://aibigo-server.vercel.app/api/v1` in production)
