@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import * as businessAPI from '../../services/api/business'
+import { clearBusinessCache } from '../../utils/cacheUtils'
 
 export const getSubscriptionPlans = createAsyncThunk(
   'business/getSubscriptionPlans',
@@ -72,7 +73,8 @@ const businessSlice = createSlice({
       })
       .addCase(getSubscriptionPlans.fulfilled, (state, action) => {
         state.loading = false
-        state.subscriptionPlans = action.payload
+        const payload = action.payload?.data || action.payload
+        state.subscriptionPlans = Array.isArray(payload) ? payload : []
       })
       .addCase(getSubscriptionPlans.rejected, (state, action) => {
         state.loading = false
@@ -84,7 +86,9 @@ const businessSlice = createSlice({
       })
       .addCase(createSubscriptionPlan.fulfilled, (state, action) => {
         state.loading = false
-        state.subscriptionPlans.push(action.payload)
+        const payload = action.payload?.data || action.payload
+        state.subscriptionPlans.push(payload)
+        clearBusinessCache() // Clear cache after mutation
       })
       .addCase(createSubscriptionPlan.rejected, (state, action) => {
         state.loading = false
@@ -96,7 +100,8 @@ const businessSlice = createSlice({
       })
       .addCase(getPayments.fulfilled, (state, action) => {
         state.loading = false
-        state.payments = action.payload
+        const payload = action.payload?.data || action.payload
+        state.payments = Array.isArray(payload) ? payload : []
       })
       .addCase(getPayments.rejected, (state, action) => {
         state.loading = false
@@ -108,7 +113,9 @@ const businessSlice = createSlice({
       })
       .addCase(createPayment.fulfilled, (state, action) => {
         state.loading = false
-        state.payments.push(action.payload)
+        const payload = action.payload?.data || action.payload
+        state.payments.push(payload)
+        clearBusinessCache() // Clear cache after mutation
       })
       .addCase(createPayment.rejected, (state, action) => {
         state.loading = false

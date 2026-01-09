@@ -6,6 +6,7 @@ import engagementReducer from './slices/engagementSlice'
 import institutesReducer from './slices/institutesSlice'
 import businessReducer from './slices/businessSlice'
 import systemReducer from './slices/systemSlice'
+import logsReducer from './slices/logsSlice'
 
 export const store = configureStore({
   reducer: {
@@ -16,5 +17,6 @@ export const store = configureStore({
     institutes: institutesReducer,
     business: businessReducer,
     system: systemReducer,
+    logs: logsReducer,
   },
 })

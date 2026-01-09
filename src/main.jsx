@@ -38,6 +38,8 @@ ReactDOM.createRoot(document.getElementById('root')).render(
             pauseOnFocusLoss
             draggable
             pauseOnHover
+            enableMultiContainer={false}
+            limit={5}
           />
         </ThemeProvider>
       </BrowserRouter>

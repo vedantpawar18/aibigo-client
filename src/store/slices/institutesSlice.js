@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import * as institutesAPI from '../../services/api/institutes'
+import { clearInstitutesCache } from '../../utils/cacheUtils'
 
 export const getInstitutes = createAsyncThunk(
   'institutes/getInstitutes',
@@ -47,7 +48,8 @@ const institutesSlice = createSlice({
       })
       .addCase(getInstitutes.fulfilled, (state, action) => {
         state.loading = false
-        state.institutes = action.payload
+        const payload = action.payload?.data || action.payload
+        state.institutes = Array.isArray(payload) ? payload : []
       })
       .addCase(getInstitutes.rejected, (state, action) => {
         state.loading = false
@@ -59,7 +61,9 @@ const institutesSlice = createSlice({
       })
       .addCase(createInstitute.fulfilled, (state, action) => {
         state.loading = false
-        state.institutes.push(action.payload)
+        const payload = action.payload?.data || action.payload
+        state.institutes.push(payload)
+        clearInstitutesCache() // Clear cache after mutation
       })
       .addCase(createInstitute.rejected, (state, action) => {
         state.loading = false
