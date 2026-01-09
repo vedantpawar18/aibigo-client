@@ -80,17 +80,27 @@ touch .env
 
 Create a `.env` file in the root directory:
 
+**Development:**
 ```env
-# Backend API URL
+# Backend API URL (local development)
 VITE_API_BASE_URL=http://localhost:3000/api/v1
 ```
 
-For production:
+**Production:**
 ```env
+# Backend API URL (Vercel production)
 VITE_API_BASE_URL=https://aibigo-server.vercel.app/api/v1
 ```
 
-**Note**: Vite requires the `VITE_` prefix for environment variables to be exposed to the client.
+**Note**: If `VITE_API_BASE_URL` is not set, the app automatically uses:
+- **Development**: `http://localhost:3000/api/v1`
+- **Production**: `https://aibigo-server.vercel.app/api/v1`
+
+**Note**: 
+- Vite requires the `VITE_` prefix for environment variables to be exposed to the client
+- If `VITE_API_BASE_URL` is not set, the app automatically uses:
+  - **Development**: `http://localhost:3000/api/v1`
+  - **Production**: `https://aibigo-server.vercel.app/api/v1`
 
 ## 🏃 Running the Application
 
@@ -427,7 +437,14 @@ VITE_API_BASE_URL=http://localhost:3000/api/v1
 VITE_API_BASE_URL=https://aibigo-server.vercel.app/api/v1
 ```
 
-**Important**: Vite only exposes variables prefixed with `VITE_` to the client.
+**Default Behavior**: If `VITE_API_BASE_URL` is not set:
+- **Development mode**: Uses `http://localhost:3000/api/v1`
+- **Production mode**: Uses `https://aibigo-server.vercel.app/api/v1`
+
+**Important**: 
+- Vite only exposes variables prefixed with `VITE_` to the client
+- The app automatically detects production mode and uses the Vercel URL
+- You can override by setting `VITE_API_BASE_URL` in your `.env` file
 
 ## 🏗 Building for Production
 
@@ -465,8 +482,10 @@ This serves the production build locally for testing.
    - **Install Command**: `npm install`
    - **Framework Preset**: Vite
 
-3. **Set Environment Variables**:
-   - `VITE_API_BASE_URL` - Backend API URL
+3. **Set Environment Variables** (optional):
+   - `VITE_API_BASE_URL` - Backend API URL (defaults to `https://aibigo-server.vercel.app/api/v1` in production)
+   
+   **Note**: If not set, the app automatically uses the Vercel production URL (`https://aibigo-server.vercel.app/api/v1`) in production builds.
 
 4. **Deploy**: Vercel auto-deploys on push to main branch
 
